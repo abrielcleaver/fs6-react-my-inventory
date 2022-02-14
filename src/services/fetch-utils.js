@@ -1,4 +1,4 @@
-import { client } from './client';
+import { client, checkError } from './client';
 
 export async function getUser() {
 
@@ -24,4 +24,31 @@ export async function logout() {
   await client.auth.signOut();
 
   return window.location.href = '/';
+}
+
+export async function createPlant(plant){
+  const response = await client
+    .from('greenhouse')
+    .insert([plant]);
+
+  return checkError(response);
+}
+
+export async function getPlants() {
+  const response = await client
+    .from('greenhouse')
+    .select();
+
+
+  return checkError(response);    
+}
+
+export async function getPlantById(id) {
+  const response = await client
+    .from('greenhouse')
+    .select()
+    .match({ id })
+    .single();
+
+  return checkError(response);    
 }

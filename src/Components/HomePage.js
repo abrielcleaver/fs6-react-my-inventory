@@ -29,7 +29,7 @@ export default function HomePage({ setUser }) {
 
   return (
     <div className='auth'>
-      <h1><em>GREENHOUSE</em></h1>
+      <h1><em>WELCOME TO GREENHOUSE</em></h1>
       {/* on submit, sign the user in using the function defined above */}
       <form onSubmit={handleSignIn}>
         <label>

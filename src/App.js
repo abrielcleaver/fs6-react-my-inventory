@@ -34,7 +34,8 @@ function App() {
             the create page, and add a button to let the user logout */}
           {
             user && <>
-              <NavLink to="/greenhouse">Greenhouse</NavLink><NavLink to="/create">Create Page</NavLink>
+              <NavLink to="/greenhouse">Greenhouse</NavLink>
+              <NavLink to="/create">Gardener&apos;s Page</NavLink>
               <button onClick={handleLogout}>logout</button>
             </>
           }
