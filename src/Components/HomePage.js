@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { signInUser, signupUser } from '../services/fetch-utils';
 
-export default function HomePage({ props }) {
+export default function HomePage({ setUser }) {
 // add state needed here
   const [email, setEmail] = useState('');  
   const [password, setPassword] = useState('');
@@ -15,7 +15,7 @@ export default function HomePage({ props }) {
 
     // set the user in App.js state using the correct prop callback. If you did the ternary right in App.js, 
     // this should automatically redirect the user to the board game list
-    props.setUser(user);
+    setUser(user);
   }
     
   async function handleSignUp() {
@@ -23,8 +23,8 @@ export default function HomePage({ props }) {
     const user = await signupUser(email, password);
 
     // set the user in App.js state using the correct prop callback. If you did the ternary right in App.js, 
-    // this should automatically redirect the user to the board game list
-    props.setUser(user);
+    // this should automatically redirect the user to the greenhouse plant list
+    setUser(user);
   }
 
   return (
