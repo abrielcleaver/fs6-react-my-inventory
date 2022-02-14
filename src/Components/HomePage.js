@@ -1,64 +1,54 @@
 import React, { useState } from 'react';
 import { signInUser, signupUser } from '../services/fetch-utils';
 
-export default function HomePage({ setCurrentUser }) {
+export default function HomePage({ props }) {
 // add state needed here
   const [email, setEmail] = useState('');  
   const [password, setPassword] = useState('');
 
-  function clearForms() {
-    setEmail('');
-    setPassword('');
-  }
-
   // what happens on submit?
-  async function handleSignUp(e) {
-    e.preventDefault();
-
-    const user = await signupUser(email, password);
-   
-    setCurrentUser(user);
-    clearForms();
-  }
-
   async function handleSignIn(e) {
     e.preventDefault();
-
+      
+    // sign the user in using the form state
     const user = await signInUser(email, password);
-    setCurrentUser(user);
-    clearForms();
+
+    // set the user in App.js state using the correct prop callback. If you did the ternary right in App.js, 
+    // this should automatically redirect the user to the board game list
+    props.setUser(user);
+  }
+    
+  async function handleSignUp() {
+    // sign the user up using the form state
+    const user = await signupUser(email, password);
+
+    // set the user in App.js state using the correct prop callback. If you did the ternary right in App.js, 
+    // this should automatically redirect the user to the board game list
+    props.setUser(user);
   }
 
   return (
-    <div className="home-page">
-      <div>
-        <h2>Welcome to Greenhouse</h2>
-      </div>
-      <form onSubmit={handleSignUp}>
+    <div className='auth'>
+      <h1><em>GREENHOUSE</em></h1>
+      {/* on submit, sign the user in using the function defined above */}
+      <form onSubmit={handleSignIn}>
         <label>
-          Email
-          {/* we sync up react state with the input. Now, input ALWAYS gets it value from react state.
+            Email
+          {/* we sync up react state with the input. input ALWAYS gets it value from react state.
                whenever state changes, this input will update--NO MATTER HOW THAT STATE CHANGED.
           */}
           {/* controlled input */}
-          <input value={email} onChange={e => setEmail(e.target.value)} />
+          {/* on change, update the form state for email */}
+          <input required type="email" name="email" value={email} onChange={e => setEmail(e.target.value)}/>
         </label>
         <label>
-          Password
-          <input value={password} type='password' onChange={e => setPassword(e.target.value)} />
-        </label>
-        <button>Sign Up</button>
-      </form>
-      <form onSubmit={handleSignIn}>
-        <label>
-          Email
-          <input value={email} onChange={e => setEmail(e.target.value)} />
-        </label>
-        <label>
-          Password
-          <input value={password} type='password' onChange={e => setPassword(e.target.value)} />
+            Password
+          {/* on change, update the form state for password */}
+          <input required type="password" name="password" value={password} onChange={e => setPassword(e.target.value)}/>
         </label>
         <button>Sign In</button>
+        {/* on clicking sign up, sign the user up using the function defined above */}
+        <button type="button" onClick={handleSignUp}>Sign Up</button>
       </form>
     </div>
   );
